@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --plum:       #2D1B4E;
+  --plum-mid:   #4A2F7A;
+  --plum-dark:  #1a0d33;
+  --gold:       #B8963E;
+  --gold-light: #E8D5A0;
+  --gold-pale:  #FBF5E6;
+  --cream:      #FAF8F3;
+  --cream-dark: #F1EDE3;
+  --ink:        #1A1917;
+  --ink-light:  #3D3C38;
+  --ink-muted:  #6B6A65;
+  --white:      #FFFFFF;
+  --teal:       #0D7A6B;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+
+  --text-xs:   0.78rem;
+  --text-sm:   0.9rem;
+  --text-base: 1rem;
+  --text-md:   1.05rem;
+  --text-lg:   1.15rem;
+  --text-xl:   1.3rem;
+
+  --lh-tight: 1.2;
+  --lh-snug:  1.45;
+  --lh-base:  1.65;
+  --lh-loose: 1.8;
+
+  --nav-h:       72px;
+  --section-v:   clamp(4rem, 8vw, 6.5rem);
+  --section-h:   clamp(4vw, 7vw, 9vw);
+  --content-max: 1140px;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--lh-loose);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  line-height: var(--lh-tight);
+  color: var(--plum);
+}
+h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; }
+h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 700; }
+h3 { font-size: clamp(1.15rem, 2vw, 1.45rem); font-weight: 600; }
+h4 { font-size: var(--text-xl); font-weight: 600; }
+
+p { font-family: var(--font-sans); font-size: var(--text-md); line-height: var(--lh-loose); color: var(--ink-light); }
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ── LAYOUT HELPERS ── */
+.section-wrap { padding: var(--section-v) var(--section-h); }
+.content-max  { max-width: var(--content-max); margin: 0 auto; }
+
+/* backgrounds */
+.bg-cream      { background: var(--cream); }
+.bg-cream-dark { background: var(--cream-dark); }
+.bg-plum       { background: var(--plum); }
+.bg-plum-dark  { background: var(--plum-dark); }
+.bg-white      { background: var(--white); }
+.bg-gold       { background: var(--gold); }
+
+/* ── TYPOGRAPHY ATOMS ── */
+.eyebrow {
+  font-family: var(--font-sans); font-size: var(--text-xs); font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.9rem;
+}
+.eyebrow::before { content:''; display:block; width:24px; height:1px; background:var(--gold); flex-shrink:0; }
+
+.section-title {
+  font-family: var(--font-serif); font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+  font-weight: 700; color: var(--plum); line-height: var(--lh-tight); margin-bottom: 1rem;
+}
+.section-title.light { color: var(--white); }
+
+.section-lead {
+  font-family: var(--font-sans); font-size: var(--text-lg);
+  color: var(--ink-light); line-height: var(--lh-loose); max-width: 58ch; margin-bottom: 2.5rem;
+}
+.section-lead.light { color: rgba(255,255,255,0.72); }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-sans); font-size: var(--text-sm); font-weight: 600;
+  letter-spacing: 0.02em; padding: 0.75rem 1.75rem; border-radius: 4px;
+  text-decoration: none; transition: all 0.2s; cursor: pointer; border: none;
+  white-space: nowrap;
+}
+.btn-plum  { background: var(--plum); color: var(--white); }
+.btn-plum:hover  { background: var(--plum-mid); transform: translateY(-1px); }
+.btn-gold  { background: var(--gold); color: var(--plum-dark); }
+.btn-gold:hover  { background: var(--gold-light); transform: translateY(-1px); }
+.btn-ghost-light { background: transparent; color: rgba(255,255,255,0.85); border: 1.5px solid rgba(255,255,255,0.35); }
+.btn-ghost-light:hover { border-color: var(--gold-light); color: var(--white); }
+.btn-ghost-dark  { background: transparent; color: var(--plum); border: 1.5px solid rgba(45,27,78,0.3); }
+.btn-ghost-dark:hover  { border-color: var(--plum); background: var(--gold-pale); }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.65s ease,transform 0.65s ease; }
+.reveal.visible { opacity:1; transform:none; }
+.reveal-d1 { transition-delay:0.1s; }
+.reveal-d2 { transition-delay:0.2s; }
+.reveal-d3 { transition-delay:0.3s; }
