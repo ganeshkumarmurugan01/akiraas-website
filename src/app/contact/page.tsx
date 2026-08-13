@@ -11,12 +11,12 @@ export default function ContactPage() {
 
   const interests = [
     'Community Partnership',
-    'EVOLVE — Project Management',
-    'Vantage X — CIO Forum',
+    'Event Marketing',
+    'Community Marketing',
     'Martech Consulting',
     'Fingoh.ai — Intent Platform',
-    'Event Collaboration',
-    'Sponsorship',
+    'Event Technology',
+    'Event Intelligence',
     'General Enquiry',
   ];
 
@@ -158,7 +158,7 @@ export default function ContactPage() {
                       id="firstName" required
                       value={form.firstName}
                       onChange={e => setForm(f => ({...f, firstName: e.target.value}))}
-                      placeholder="GaneshKumar"
+                      placeholder="First Name"
                     />
                   </div>
                   <div className="field">
@@ -167,7 +167,7 @@ export default function ContactPage() {
                       id="lastName"
                       value={form.lastName}
                       onChange={e => setForm(f => ({...f, lastName: e.target.value}))}
-                      placeholder="Murugan"
+                      placeholder="Last Name"
                     />
                   </div>
                 </div>
