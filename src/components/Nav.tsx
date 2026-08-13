@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
@@ -45,11 +46,15 @@ export default function Nav() {
           display: 'flex', alignItems: 'center',
           padding: '0 var(--section-h)', height: 'var(--nav-h)', gap: '0.5rem',
         }}>
-          <Link href="/" style={{
-            fontFamily: 'var(--font-serif)', fontSize: '1.55rem', fontWeight: 700,
-            color: 'var(--plum)', letterSpacing: '-0.02em', marginRight: 'auto', flexShrink: 0,
-          }}>
-            Akiraas
+          <Link href="/" style={{ marginRight: 'auto', flexShrink: 0, display: 'flex', alignItems: 'center' }}>
+            <Image
+              src="/Akiraas_Purple.png"
+              alt="Akiraas"
+              height={36}
+              width={160}
+              style={{ height: 36, width: 'auto', display: 'block' }}
+              priority
+            />
           </Link>
 
           {/* Desktop links */}
@@ -123,11 +128,11 @@ export default function Nav() {
         flexDirection: 'column', padding: '5.5rem var(--section-h) 3rem',
         gap: 0,
       }}>
-        <button onClick={() => setOpen(false)} style={{
-          position: 'absolute', top: '1.4rem', right: 'var(--section-h)',
-          background: 'none', border: 'none', fontSize: '1.5rem',
-          color: 'var(--plum)', cursor: 'pointer', lineHeight: 1,
-        }}>✕</button>
+        {/* Mobile header with logo + close */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 'var(--nav-h)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 var(--section-h)', borderBottom: '1px solid var(--cream-dark)' }}>
+          <Image src="/Akiraas_Purple.png" alt="Akiraas" height={32} width={140} style={{ height: 32, width: 'auto' }} />
+          <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', fontSize: '1.4rem', color: 'var(--plum)', cursor: 'pointer', lineHeight: 1 }}>✕</button>
+        </div>
         {links.map(({ href, label }) => (
           <Link key={href} href={href} style={{
             fontFamily: 'var(--font-sans)', fontSize: '1.15rem',
