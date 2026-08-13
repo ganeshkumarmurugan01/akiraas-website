@@ -42,7 +42,6 @@ export default function Nav() {
         transition: 'border-color 0.3s, box-shadow 0.3s',
       }}>
         <div style={{
-          maxWidth: 'var(--content-max)', margin: '0 auto',
           display: 'flex', alignItems: 'center',
           padding: '0 var(--section-h)', height: 'var(--nav-h)', gap: '0.5rem',
         }}>
