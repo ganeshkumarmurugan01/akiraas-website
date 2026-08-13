@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -6,7 +7,6 @@ export default function Footer() {
       <style>{`
         .site-footer { background: var(--plum-dark); padding: clamp(3rem,6vw,5rem) var(--section-h) 2.5rem; }
         .footer-grid { max-width: var(--content-max); margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 2rem; }
-        .footer-brand-logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--gold-light); margin-bottom: 1rem; display: block; }
         .footer-brand p { font-size: var(--text-sm); color: rgba(255,255,255,0.5); line-height: var(--lh-loose); max-width: 30ch; margin-bottom: 1.5rem; }
         .footer-brand address { font-style: normal; font-size: var(--text-sm); color: rgba(255,255,255,0.35); line-height: var(--lh-loose); }
         .footer-col h5 { font-family: var(--font-sans); font-size: var(--text-xs); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
@@ -23,7 +23,7 @@ export default function Footer() {
       <footer className="site-footer">
         <div className="footer-grid">
           <div className="footer-brand">
-            <span className="footer-brand-logo">Akiraas</span>
+            <Image src="/Akiraas_White.png" alt="Akiraas" height={36} width={160} style={{ height: 36, width: 'auto', display: 'block', marginBottom: '1rem' }} />
             <p>Building focused communities and curated experiences to foster human connections. Headquartered in Singapore, operating worldwide.</p>
             <address>Akiraas Pte Ltd · #09-62, 403 Admiralty Link<br />Singapore 750403 · admin@akiraas.com · +65 8979 3235</address>
           </div>

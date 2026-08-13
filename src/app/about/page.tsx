@@ -91,7 +91,7 @@ export default function AboutPage() {
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)',marginBottom:'1.2rem'}}>Akiraas was born from a simple but urgent observation: in a world more connected than ever, genuine professional connection had become increasingly rare. Events were getting bigger, but conversations were getting shallower.</p>
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)',marginBottom:'1.2rem'}}>GaneshKumar Murugan founded Akiraas with a clear mandate: to create communities that didn&apos;t just gather people in a room, but gave them genuine reasons to connect, grow, and return.</p>
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)'}}>Headquartered in Singapore, Akiraas operates across APAC and globally — building communities that reflect the full diversity of the world&apos;s professional landscape.</p>
-            <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)'}}> <li><a href="https://www.linkedin.com/in/ganeshkumarmurugan/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li></p>
+            <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)'}}> <a href="https://www.linkedin.com/in/ganeshkumarmurugan/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
           </div>
         </div>
       </section>
