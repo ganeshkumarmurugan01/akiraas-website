@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   title: { default: 'Akiraas — Building Human Connections', template: '%s | Akiraas' },
   description: 'Akiraas builds focused communities, curated experiences, and technology products that foster meaningful human connections. Headquartered in Singapore, operating worldwide.',
   keywords: ['Akiraas', 'communities', 'EVOLVE', 'Vantage X', 'Fingoh.ai', 'martech consulting', 'Singapore'],
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     siteName: 'Akiraas',
     locale: 'en_SG',
