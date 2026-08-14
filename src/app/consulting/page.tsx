@@ -1,9 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+
 export const metadata: Metadata = {
-  title: 'Martech Consulting',
-  description: 'Strategy, technology, and implementation for event organisers. Akiraas helps build the martech ecosystem your events deserve.',
+  title: 'Martech Consulting for Event Organisers',
+  description: 'Akiraas helps event organisers build their marketing and technology ecosystems — from strategy and stack architecture to Zoho Backstage implementation and automation.',
+  alternates: { canonical: 'https://akiraas.com/consulting' },
+  openGraph: {
+    title: 'Martech Consulting for Event Organisers',
+    description: 'Akiraas helps event organisers build their marketing and technology ecosystems — from strategy and stack architecture to Zoho Backstage implementation and automation.',
+    url: 'https://akiraas.com/consulting',
+  },
 };
 
 export default function ConsultingPage() {

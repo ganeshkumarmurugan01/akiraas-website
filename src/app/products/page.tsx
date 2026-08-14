@@ -2,9 +2,16 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
+
 export const metadata: Metadata = {
-  title: 'Products — Fingoh.ai',
-  description: 'Fingoh.ai — the Intent Intelligence Platform for B2B Trade Fairs. Built by Akiraas to help exhibitors identify, engage and convert the right prospects.',
+  title: 'Fingoh.ai — Intent Intelligence for B2B Trade Fairs',
+  description: 'Fingoh.ai helps exhibitors identify, engage and convert the right prospects before, during and after every trade fair. Built by Akiraas.',
+  alternates: { canonical: 'https://akiraas.com/products' },
+  openGraph: {
+    title: 'Fingoh.ai — Intent Intelligence for B2B Trade Fairs',
+    description: 'Fingoh.ai helps exhibitors identify, engage and convert the right prospects before, during and after every trade fair. Built by Akiraas.',
+    url: 'https://akiraas.com/products',
+  },
 };
 
 export default function ProductsPage() {

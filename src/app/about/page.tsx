@@ -1,9 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+
 export const metadata: Metadata = {
-  title: 'About Us',
-  description: 'The story behind Akiraas — why we exist, what we believe, and who we are.',
+  title: 'About Us — Our Story, Values & Founder',
+  description: 'The story behind Akiraas — why we exist, what we believe, and who we are. Built on the belief that human connection is the most powerful force in professional life.',
+  alternates: { canonical: 'https://akiraas.com/about' },
+  openGraph: {
+    title: 'About Us — Our Story, Values & Founder',
+    description: 'The story behind Akiraas — why we exist, what we believe, and who we are. Built on the belief that human connection is the most powerful force in professional life.',
+    url: 'https://akiraas.com/about',
+  },
 };
 
 export default function AboutPage() {
@@ -82,16 +89,15 @@ export default function AboutPage() {
           <div className="fade-up">
             <div className="origin-img">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/Ganesh_Profile.jpg" alt="GaneshKumar Murugan" />
+              <img src="https://akiraas.zohosites.com/picture.jpg" alt="GaneshKumar Murugan" />
             </div>
           </div>
           <div className="fade-up reveal-d1">
             <div className="eyebrow">The Origin</div>
-            <blockquote className="origin-quote">&quot; akiraas mean creating an expansive feel - like a community of bright minds guided by clarity and purpose.&quot;</blockquote>
+            <blockquote className="origin-quote">&quot;I kept seeing the same thing: extraordinary people in the same room, never actually meeting. I wanted to fix that.&quot;</blockquote>
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)',marginBottom:'1.2rem'}}>Akiraas was born from a simple but urgent observation: in a world more connected than ever, genuine professional connection had become increasingly rare. Events were getting bigger, but conversations were getting shallower.</p>
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)',marginBottom:'1.2rem'}}>GaneshKumar Murugan founded Akiraas with a clear mandate: to create communities that didn&apos;t just gather people in a room, but gave them genuine reasons to connect, grow, and return.</p>
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)'}}>Headquartered in Singapore, Akiraas operates across APAC and globally — building communities that reflect the full diversity of the world&apos;s professional landscape.</p>
-            <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)'}}> <a href="https://www.linkedin.com/in/ganeshkumarmurugan/" target="_blank" rel="noopener noreferrer">LinkedIn</a></p>
           </div>
         </div>
       </section>

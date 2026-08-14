@@ -1,9 +1,16 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+
 export const metadata: Metadata = {
-  title: 'Events & Communities',
-  description: 'EVOLVE — Project Management Community and Vantage X — CIO Community Forum. Built by Akiraas for professionals who want more than networking.',
+  title: 'Events & Communities — EVOLVE & Vantage X',
+  description: 'EVOLVE is a curated Project Management community. Vantage X is an invitation-only CIO Forum. Both built by Akiraas for professionals who want more than networking.',
+  alternates: { canonical: 'https://akiraas.com/events' },
+  openGraph: {
+    title: 'Events & Communities — EVOLVE & Vantage X',
+    description: 'EVOLVE is a curated Project Management community. Vantage X is an invitation-only CIO Forum. Both built by Akiraas for professionals who want more than networking.',
+    url: 'https://akiraas.com/events',
+  },
 };
 
 export default function EventsPage() {
