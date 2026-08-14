@@ -29,7 +29,7 @@ export default function AboutPage() {
         .origin{padding:var(--section-v) var(--section-h);background:var(--white)}
         .origin-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start;max-width:var(--content-max);margin:0 auto}
         .origin-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--plum)}
-        .origin-img img{width:100%;height:100%;object-fit:cover;opacity:.82;mix-blend-mode:luminosity}
+        .origin-img img{width:100%;height:100%;object-fit:cover;object-position:center top;}
         .origin-quote{font-family:var(--font-serif);font-style:italic;font-size:clamp(1.1rem,1.8vw,1.4rem);color:var(--plum);line-height:1.5;border-left:3px solid var(--gold);padding-left:1.5rem;margin-bottom:2rem}
         .timeline-sec{padding:var(--section-v) var(--section-h);background:var(--cream-dark)}
         .tl-inner{max-width:var(--content-max);margin:0 auto}

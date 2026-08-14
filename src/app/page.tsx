@@ -275,7 +275,7 @@ export default function HomePage() {
         <div className="founder-inner">
           <div className="founder-img fade-up">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="https://akiraas.zohosites.com/picture.jpg" alt="GaneshKumar Murugan" />
+            <img src="/Ganesh_Profile.jpg" alt="GaneshKumar Murugan" />
           </div>
           <div className="fade-up reveal-d1">
             <div className="eyebrow">The Founder</div>
