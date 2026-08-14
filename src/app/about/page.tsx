@@ -89,7 +89,7 @@ export default function AboutPage() {
           <div className="fade-up">
             <div className="origin-img">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="https://akiraas.zohosites.com/picture.jpg" alt="GaneshKumar Murugan" />
+              <img src="/Ganesh_Profile.jpg" alt="GaneshKumar Murugan" />
             </div>
           </div>
           <div className="fade-up reveal-d1">
