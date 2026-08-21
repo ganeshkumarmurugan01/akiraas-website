@@ -1,37 +1,83 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+declare global {
+  interface Window {
+    turnstile: {
+      render: (el: HTMLElement, opts: object) => string;
+      reset: (id: string) => void;
+      remove: (id: string) => void;
+    };
+  }
+}
 
 export default function ContactPage() {
-  const [chips, setChips] = useState<string[]>([]);
+  const [chips, setChips]   = useState<string[]>([]);
   const [status, setStatus] = useState<'idle'|'sending'|'success'|'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
-  const [form, setForm] = useState({
-    firstName: '', lastName: '', email: '', org: '', message: '',
-  });
+  const [form, setForm]     = useState({ firstName:'', lastName:'', email:'', org:'', message:'' });
+  const [tsToken, setTsToken] = useState('');
+  const tsRef  = useRef<HTMLDivElement>(null);
+  const tsId   = useRef<string>('');
 
   const interests = [
-    'Community Partnership',
-    'Event Marketing',
-    'Community Marketing',
-    'Martech Consulting',
-    'Fingoh.ai — Intent Platform',
-    'Event Technology',
-    'Event Intelligence',
-    'General Enquiry',
+    'Community Partnership','EVOLVE — Project Management','Vantage X — CIO Forum',
+    'Martech Consulting','Fingoh.ai — Intent Platform','Event Collaboration',
+    'Sponsorship','General Enquiry',
   ];
+
+  // Load Turnstile script and render widget
+  useEffect(() => {
+    const SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAEXRXkCb_VZDACcI';
+    if (!SITE_KEY || !tsRef.current) return;
+
+    const renderWidget = () => {
+      if (!tsRef.current || !window.turnstile) return;
+      tsId.current = window.turnstile.render(tsRef.current, {
+        sitekey: SITE_KEY,
+        callback: (token: string) => setTsToken(token),
+        'expired-callback': () => setTsToken(''),
+        'error-callback':   () => setTsToken(''),
+        theme: 'light',
+        size: 'normal',
+      });
+    };
+
+    if (window.turnstile) {
+      renderWidget();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      script.async = true;
+      script.defer = true;
+      script.onload = renderWidget;
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      if (tsId.current && window.turnstile) {
+        try { window.turnstile.remove(tsId.current); } catch {}
+      }
+    };
+  }, []);
 
   const toggleChip = (c: string) =>
     setChips(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!tsToken) {
+      setStatus('error');
+      setErrorMsg('Please complete the security check before submitting.');
+      return;
+    }
     setStatus('sending');
     setErrorMsg('');
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, interests: chips }),
+        body: JSON.stringify({ ...form, interests: chips, tsToken }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Something went wrong');
@@ -39,6 +85,11 @@ export default function ContactPage() {
     } catch (err: unknown) {
       setStatus('error');
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      // Reset Turnstile on error so user can retry
+      if (tsId.current && window.turnstile) {
+        window.turnstile.reset(tsId.current);
+        setTsToken('');
+      }
     }
   };
 
@@ -67,6 +118,9 @@ export default function ContactPage() {
         .chip{font-size:var(--text-sm);padding:.4rem 1rem;border:1px solid var(--cream-dark);background:var(--cream);cursor:pointer;transition:all .2s;color:var(--ink-muted);user-select:none}
         .chip:hover{border-color:var(--gold-light);color:var(--ink)}
         .chip.active{background:var(--plum);color:var(--white);border-color:var(--plum)}
+        /* honeypot — visually hidden but not display:none so it renders */
+        .hp-field{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;tab-index:-1}
+        .turnstile-wrap{margin-bottom:1.2rem;min-height:65px}
         .submit-btn{width:100%;background:var(--plum);color:var(--white);border:none;cursor:pointer;font-family:var(--font-sans);font-size:var(--text-sm);font-weight:600;padding:1rem;letter-spacing:.05em;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:.5rem}
         .submit-btn:hover:not(:disabled){background:var(--plum-mid)}
         .submit-btn:disabled{opacity:.6;cursor:not-allowed}
@@ -87,6 +141,7 @@ export default function ContactPage() {
           .why-grid{grid-template-columns:1fr}
           .contact-form{padding:2rem 1.5rem}
         }
+        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
       `}</style>
 
       {/* HERO */}
@@ -106,12 +161,12 @@ export default function ContactPage() {
       <section className="contact-main">
         <div className="contact-grid">
 
-          {/* LEFT — contact info */}
+          {/* LEFT */}
           <div className="fade-up">
             <div className="eyebrow">Get In Touch</div>
             <h2 className="section-title">We&apos;re based in<br /><em>Singapore</em></h2>
             <p style={{fontSize:'var(--text-md)',color:'var(--ink-light)',lineHeight:'var(--lh-loose)',marginBottom:'1.5rem'}}>
-              Reach out to us through any of the channels below. We typically respond within one business day.
+              Reach out through any of the channels below. We typically respond within one business day.
             </p>
             <div className="contact-details">
               {([
@@ -122,16 +177,13 @@ export default function ContactPage() {
               ] as [string,string,string][]).map(([icon,label,val]) => (
                 <div className="detail-row" key={label}>
                   <div className="detail-icon">{icon}</div>
-                  <div>
-                    <span className="detail-label">{label}</span>
-                    <span className="detail-val">{val}</span>
-                  </div>
+                  <div><span className="detail-label">{label}</span><span className="detail-val">{val}</span></div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* RIGHT — form */}
+          {/* RIGHT — FORM */}
           <div className="contact-form fade-up reveal-d1">
             {status === 'success' ? (
               <div className="success-state">
@@ -151,85 +203,70 @@ export default function ContactPage() {
                   <div className="error-msg">⚠️ {errorMsg}</div>
                 )}
 
+                {/* Honeypot — bots fill this, humans don't */}
+                <div className="hp-field" aria-hidden="true">
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    id="hp-website"
+                  />
+                </div>
+
                 <div className="form-row">
                   <div className="field">
                     <label htmlFor="firstName">First Name *</label>
-                    <input
-                      id="firstName" required
-                      value={form.firstName}
-                      onChange={e => setForm(f => ({...f, firstName: e.target.value}))}
-                      placeholder="First Name"
-                    />
+                    <input id="firstName" required value={form.firstName}
+                      onChange={e => setForm(f=>({...f,firstName:e.target.value}))} placeholder="GaneshKumar" />
                   </div>
                   <div className="field">
                     <label htmlFor="lastName">Last Name</label>
-                    <input
-                      id="lastName"
-                      value={form.lastName}
-                      onChange={e => setForm(f => ({...f, lastName: e.target.value}))}
-                      placeholder="Last Name"
-                    />
+                    <input id="lastName" value={form.lastName}
+                      onChange={e => setForm(f=>({...f,lastName:e.target.value}))} placeholder="Murugan" />
                   </div>
                 </div>
 
                 <div className="field">
                   <label htmlFor="email">Email Address *</label>
-                  <input
-                    id="email" required type="email"
-                    value={form.email}
-                    onChange={e => setForm(f => ({...f, email: e.target.value}))}
-                    placeholder="you@company.com"
-                  />
+                  <input id="email" required type="email" value={form.email}
+                    onChange={e => setForm(f=>({...f,email:e.target.value}))} placeholder="you@company.com" />
                 </div>
 
                 <div className="field">
                   <label htmlFor="org">Organisation</label>
-                  <input
-                    id="org"
-                    value={form.org}
-                    onChange={e => setForm(f => ({...f, org: e.target.value}))}
-                    placeholder="Your company or organisation"
-                  />
+                  <input id="org" value={form.org}
+                    onChange={e => setForm(f=>({...f,org:e.target.value}))} placeholder="Your company or organisation" />
                 </div>
 
                 <div>
                   <span className="chips-label">I&apos;m Interested In</span>
                   <div className="chips-row">
                     {interests.map(c => (
-                      <div
-                        key={c}
-                        className={`chip${chips.includes(c) ? ' active' : ''}`}
-                        onClick={() => toggleChip(c)}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={e => e.key === 'Enter' && toggleChip(c)}
-                      >
-                        {c}
-                      </div>
+                      <div key={c} className={`chip${chips.includes(c)?' active':''}`}
+                        onClick={()=>toggleChip(c)} role="button" tabIndex={0}
+                        onKeyDown={e=>e.key==='Enter'&&toggleChip(c)}>{c}</div>
                     ))}
                   </div>
                 </div>
 
                 <div className="field">
                   <label htmlFor="message">Message *</label>
-                  <textarea
-                    id="message" required
-                    value={form.message}
-                    onChange={e => setForm(f => ({...f, message: e.target.value}))}
-                    placeholder="Tell us about your interest, your community, or your event — whatever feels relevant."
-                  />
+                  <textarea id="message" required value={form.message}
+                    onChange={e => setForm(f=>({...f,message:e.target.value}))}
+                    placeholder="Tell us about your interest, your community, or your event." />
                 </div>
 
-                <button type="submit" className="submit-btn" disabled={status === 'sending'}>
-                  {status === 'sending' ? (
-                    <>
-                      <span style={{display:'inline-block',animation:'spin 1s linear infinite'}}>◌</span>
-                      Sending…
-                    </>
-                  ) : 'Send Message →'}
-                </button>
+                {/* Cloudflare Turnstile */}
+                <div className="turnstile-wrap">
+                  <div ref={tsRef} />
+                </div>
 
-                <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
+                <button type="submit" className="submit-btn" disabled={status==='sending'}>
+                  {status === 'sending'
+                    ? <><span style={{animation:'spin 1s linear infinite',display:'inline-block'}}>◌</span> Sending…</>
+                    : 'Send Message →'}
+                </button>
               </form>
             )}
           </div>
@@ -247,10 +284,7 @@ export default function ContactPage() {
               ['Real Impact','Whether you join a community, commission a consulting engagement, or explore Fingoh.ai — we measure success by the tangible difference it makes.'],
               ['A Partner Who Cares','We are a small, intentional team. You will always deal directly with people who care about the outcome — not account managers reading from a script.'],
             ].map(([t,d]) => (
-              <div className="why-card fade-up" key={t}>
-                <h3>{t}</h3>
-                <p>{d}</p>
-              </div>
+              <div className="why-card fade-up" key={t}><h3>{t}</h3><p>{d}</p></div>
             ))}
           </div>
         </div>
