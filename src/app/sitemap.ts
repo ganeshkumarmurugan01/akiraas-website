@@ -1,20 +1,51 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = 'https://akiraas.com';
-  const pages = [
-    { url: base,                   priority: 1.0,  changeFreq: 'weekly'  },
-    { url: `${base}/about`,        priority: 0.8,  changeFreq: 'monthly' },
-    { url: `${base}/events`,       priority: 0.9,  changeFreq: 'weekly'  },
-    { url: `${base}/consulting`,   priority: 0.8,  changeFreq: 'monthly' },
-    { url: `${base}/products`,     priority: 0.8,  changeFreq: 'monthly' },
-    { url: `${base}/contact`,      priority: 0.7,  changeFreq: 'yearly'  },
-  ];
+  const base = 'https://akiraas.com'
+  const now = new Date()
 
-  return pages.map(p => ({
-    url:              p.url,
-    lastModified:     new Date(),
-    changeFrequency:  p.changeFreq as MetadataRoute.Sitemap[0]['changeFrequency'],
-    priority:         p.priority,
-  }));
+  return [
+    {
+      url: base,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 1.0,
+    },
+    {
+      url: `${base}/about`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/events`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/ai-events`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
+      url: `${base}/consulting`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/products`,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${base}/contact`,
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.6,
+    },
+  ]
 }
