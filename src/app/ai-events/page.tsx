@@ -32,8 +32,8 @@ export default function AIEventsPage() {
             every show performs harder and every relationship lasts longer.
           </p>
           <div className="aie-hero-ctas">
-            <Link href="/contact" className="btn-gold">Talk to Akiraas →</Link>
-            <a href="#lifecycle" className="btn-ghost-light">See how it works ↓</a>
+            <Link href="/contact" className="btn-gold aie-cta-btn">Talk to Akiraas →</Link>
+            <a href="#lifecycle" className="btn-ghost-light aie-cta-btn">See how it works ↓</a>
           </div>
         </div>
       </section>
@@ -335,8 +335,19 @@ export default function AIEventsPage() {
         }
         .aie-hero-ctas {
           display: flex;
+          align-items: center;
           gap: 1rem;
           flex-wrap: wrap;
+        }
+        .aie-cta-btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 48px;
+          padding: 0 1.75rem;
+          font-size: var(--text-sm);
+          white-space: nowrap;
+          box-sizing: border-box;
         }
 
         /* ── WHY ── */
@@ -520,15 +531,18 @@ export default function AIEventsPage() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--ink-light);
-          margin-bottom: 1rem;
+          margin-bottom: 1.25rem;
         }
         .aie-fingoh-logo-wrap {
-          margin-bottom: 1.5rem;
+          display: flex;
+          justify-content: center;
+          margin-bottom: 1.75rem;
         }
         .aie-fingoh-logo {
           height: 52px;
           width: auto;
           object-fit: contain;
+          display: block;
         }
         .aie-fingoh-tagline {
           font-family: var(--font-sans);

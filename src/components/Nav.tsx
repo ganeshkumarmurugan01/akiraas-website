@@ -8,7 +8,7 @@ import Image from 'next/image'
 const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About Us' },
-  { href: '/events', label: 'Events' },
+  { href: '/events', label: 'Community' },
   { href: '/ai-events', label: 'AI for Events' },
   { href: '/consulting', label: 'Consulting' },
   { href: '/products', label: 'Products' },
@@ -127,10 +127,10 @@ export default function Nav() {
         .nav-links {
           display: flex;
           list-style: none;
-          margin: 0;
+          margin: 0 0 0 auto;
           padding: 0;
           gap: 0.1rem;
-          flex: 1;
+          flex: 0 1 auto;
         }
         .nav-link {
           font-family: var(--font-sans);
